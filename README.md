@@ -9,10 +9,10 @@ Build:
 
 Sample usage:
 
-    recompile
-    user = %User{}
-    user2 = User.set_user(user, 2)
-    User.log(user2)
-    user3 = User.set_audio(user2, 3)
-    User.set_video(user3, 4)
+    > recompile
+    > c = %Client{}
+    > c2 = Client.set_id(c, 2)
+    > c3 = Client.add_stream(c2, :audio, 1)
+    > c4 = Client.add_stream(c3, :video, 2)
+    > Client.log(c4)
 
