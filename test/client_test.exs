@@ -1,4 +1,6 @@
 defmodule ClientTest do
+  alias Client.Stream
+
   use ExUnit.Case
   doctest Client
 
@@ -23,6 +25,10 @@ defmodule ClientTest do
     assert length(client2.streams) == 1
     assert List.first(client2.streams).type == :audio
     assert List.first(client2.streams).ssrc == 2
+
+    assert Enum.find(client2.streams, %Stream{}, fn stream -> stream.type == :audio end).ssrc == 2
+    assert Enum.find(client2.streams, %Stream{}, fn stream -> stream.type == :video end).ssrc == 0
+    assert Enum.find(client2.streams, %Stream{}, fn stream -> stream.type == :rtx end).ssrc == 0
   end
 
   test "add audio and video" do
@@ -34,5 +40,9 @@ defmodule ClientTest do
     assert List.first(client3.streams).ssrc == 2
     assert List.last(client3.streams).type == :video
     assert List.last(client3.streams).ssrc == 3
+
+    assert Enum.find(client3.streams, %Stream{}, fn stream -> stream.type == :audio end).ssrc == 2
+    assert Enum.find(client3.streams, %Stream{}, fn stream -> stream.type == :video end).ssrc == 3
+    assert Enum.find(client3.streams, %Stream{}, fn stream -> stream.type == :rtx end).ssrc == 0
   end
 end
