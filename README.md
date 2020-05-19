@@ -10,9 +10,8 @@ Build:
 Sample usage:
 
     > recompile
-    > c = %Client{}
-    > c2 = Client.set_id(c, 2)
-    > c3 = Client.add_stream(c2, :audio, 1)
-    > c4 = Client.add_stream(c3, :video, 2)
-    > Client.log(c4)
+    > c = %Server.Client{}
+    > c2 = Server.Client.set_id(c, 2)
+    > c3 = Server.Client.add_stream(c2, 1)
+    > Server.Client.log(c3)
 
