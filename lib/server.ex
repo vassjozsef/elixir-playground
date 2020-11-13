@@ -23,6 +23,20 @@ defmodule Server do
     end
   end
 
+  def remove_client(server, user_id) do
+    case client_find(server.clients, user_id) do
+      {:ok, client} ->
+        %__MODULE__{
+          server
+          | clients: Map.delete(server.clients, user_id),
+            ssrcs: Map.drop(server.ssrcs, Enum.map(client.streams, & &1.ssrc))
+        }
+
+      :error ->
+        server
+    end
+  end
+
   def add_client(server, user_id, channel_id) do
     case client_find(server.clients, user_id) do
       {:ok, _} ->
